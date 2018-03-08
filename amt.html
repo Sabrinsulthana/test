@@ -1,0 +1,179 @@
+<!doctype html>
+<html>
+<head>
+<title>Bank</title>
+<source src="web3.min.js">
+</head>
+<body>
+<form style="background-color:#E5E5FA"></h1>
+<center>
+</style>
+
+TRANSFER:<br>
+      
+	address to:<input type="text" id="a1" value=""><br>
+	value:<input type="text" id="a2" value=" "><br>
+	<button type="button" onclick="transfer()">transfer</button><br>
+
+MINT:<br>
+	amount:<input type="text" id="s1" value=""><br>
+	<button type="button" onclick="toadd()">toadd</button><br>
+
+</form>
+<script>
+	web3.eth.defaultAccount = web3.eth.accounts[0];
+	 var amttransfer=web3.eth.contract([
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "totalSupply",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "symbol",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "mint",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "balances",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	}
+]);
+var amttransfer=amttransfer.at('0xcc05141436570cd8f5e594a42317adce2bff9ec1');
+
+if(!web3.isConnected()) {
+  
+        console.log("Ok");
+        
+      } else {
+        console.log("no");
+      }
+      web3.version.getNetwork((err, netId) => {
+            switch (netId) {
+              case "1":
+                console.log('This is mainnet')
+                break
+              case "2":
+                console.log('This is the deprecated Morden test network.')
+                break
+              case "3":
+                console.log('This is the ropsten test network.')
+                break
+              case "4":
+                console.log('This is the Rinkeby test network.')
+                break
+              case "42":
+                console.log('This is the Kovan test network.')
+                break
+              default:
+                console.log('This is an unknown network.')
+            }
+        });
+
+function transfer()
+	{
+		var a1=document.getElementById("a1").value;
+		var a2=document.getElementById("a2").value;
+		amttransfer.transfer(a1,a2,function(error,result){
+		console.log("result");
+		alert(result);
+		});
+	}
+
+
+function mint()
+	{
+		var s1=document.getElementById("s1").value;
+		amttransfer.mint(s1,function(error,result){
+		console.log("result");
+		alert(result);
+		});
+}
+</script>
+
+</body>
+
+</html>
